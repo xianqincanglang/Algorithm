@@ -7,11 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#include "SwordFinger_1.hpp"
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
         NSLog(@"Hello, World!");
+        
+        
+//        SwordFinger_1 swordFinger;
+        
+        test();
     }
     return 0;
 }
