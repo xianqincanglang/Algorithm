@@ -1,8 +1,8 @@
 # Algorithm
 Algorithm for Sword Finger,leetcode,acm....so on,please visit and give your advises
 #### 剑指offer
-    ##### 1.二位数组中的查找
-    ##### 2.替换空格
+    1.二位数组中的查找
+    2.替换空格
     ##### 3.从尾到头打印链表
     ##### 4.重建二叉树
     ##### 5.用两个栈实现队列
