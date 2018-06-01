@@ -10,3 +10,7 @@ Algorithm for Sword Finger,leetcode,acm....so on,please visit and give your advi
     7.斐波那契数列
     8.跳台阶
     9.变态跳台阶
+    10.矩形覆盖
+    11.二进制中1的个数
+    12.数值的整数次方
+    13.数值的整数次方

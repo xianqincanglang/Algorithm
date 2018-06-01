@@ -292,6 +292,116 @@ int jumpFloorII(int number) {
     }
     return 2*jumpFloorII(number-1);
 }
+
+#pragma mark - 10 矩形覆盖
+/*
+ *  我们可以用2*1的小矩形横着或者竖着去覆盖更大的矩形。请问用n个2*1的小矩形无重叠地覆盖一个2*n的大矩形，总共有多少种方法？
+ */
+int rectCover(int number) {
+    //画图找规律
+    if (number <= 0) {
+        return 0;
+    }else if (number == 1 || number == 2){
+        return number;
+    }
+
+    return rectCover(number-1)+rectCover(number - 2);
+}
+#pragma mark - 11 二进制中1的个数
+/*
+ * 输入一个整数，输出该数二进制表示中1的个数。其中负数用补码表示。
+ */
+int  NumberOf1(int n) {
+    
+    //考虑采用二进制的运算求解
+    int count = 0;
+    while (n != 0) {
+        count ++;
+        n = n & (n - 1);
+    }
+    return count;
+
+}
+
+#pragma mark - 12 数值的整数次方
+/*
+ * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+ */
+double Power(double base, int exponent) {
+    //直接以数学运算表示
+    double result = 0;
+    if (exponent == 0) {
+        return 1;
+    }else if (exponent > 0){
+        result = base;
+        for (int i = 0 ; i < (exponent-1); i ++) {
+            result = result * base;
+        }
+        return result;
+    }else{
+        result = base;
+        exponent = -exponent;
+        for (int i = 0 ; i < (exponent-1); i ++) {
+            result = result * base;
+        }
+        return 1/result;
+    }
+    
+}
+#pragma mark - 13 调整数组顺序使奇数位于偶数前面
+/*
+ * 输入一个整数数组，实现一个函数来调整该数组中数字的顺序，使得所有的奇数位于数组的前半部分，所有的偶数位于位于数组的后半部分，并保证奇数和奇数，偶数和偶数之间的相对位置不变。
+ */
+void reOrderArray(vector<int> &array) {
+    vector<int> oddNumberArray;     //奇数
+    vector<int> evenNumberArray;    //偶数
+    
+    int arrayLength = (int)array.size();
+    for (int i = 0 ; i < arrayLength; i ++) {
+        if (array[i]%2 == 0) {
+            evenNumberArray.push_back(array[i]);
+        }else{
+            oddNumberArray.push_back(array[i]);
+        }
+    }
+//    two vector connect
+    array.clear();
+    oddNumberArray.insert(oddNumberArray.end(), evenNumberArray.begin(), evenNumberArray.end());
+    array = oddNumberArray;
+}
+#pragma mark - 14 输入一个链表，输出该链表中倒数第k个结点。，待补充
+/*
+ * 输入一个链表，输出该链表中倒数第k个结点。
+ */
+
+ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
+    if (!pListHead || k == 0 ) {
+        return NULL;
+    }
+    
+    //将链表反转，存入栈中
+    stack<ListNode *> stack;
+    while (pListHead) {
+        stack.push(pListHead);
+        pListHead = pListHead->next;
+    }
+    
+    if (stack.size() < k) {
+        return NULL;
+    }
+    int i = 0;
+    while (i < k) {
+        stack.pop();
+        i++;
+    }
+//    ListNode *node = stack.pop();//
+    return node;
+}
+
+#pragma mark - 15 数值的整数次方
+/*
+ * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+ */
 #pragma mark - test
 void test()
 {
@@ -299,5 +409,9 @@ void test()
 //    swordFinger_2_test();
 //    swordFinger_3_test();
     vector<int> rotateArray = {3,4,5,1,2};
-    cout<< minNumberInRotateArray(rotateArray);
+//    cout<< minNumberInRotateArray(rotateArray);
+    reOrderArray(rotateArray);
+    for (int i = 0; i < rotateArray.size(); i ++) {
+        cout << rotateArray[i];
+    }
 }
