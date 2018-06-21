@@ -389,13 +389,13 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
     if (stack.size() < k) {
         return NULL;
     }
-    int i = 0;
+    int i = 1;//k从1开始
     while (i < k) {
         stack.pop();
         i++;
     }
-//    ListNode *node = stack.pop();//
-    return node;
+    
+    return stack.top();
 }
 
 #pragma mark - 15 数值的整数次方
