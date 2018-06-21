@@ -1,5 +1,9 @@
 # Algorithm
 Algorithm for Sword Finger,leetcode,acm....so on,please visit and give your advises
+
+please run the procedure on the platform of mac with Xcode,of Course, the thought is adopting everywhere.
+
+
 #### 剑指offer
     1.二位数组中的查找
     2.替换空格
