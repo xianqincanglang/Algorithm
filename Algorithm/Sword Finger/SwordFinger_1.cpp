@@ -398,20 +398,36 @@ ListNode* FindKthToTail(ListNode* pListHead, unsigned int k) {
     return stack.top();
 }
 
-#pragma mark - 15 数值的整数次方
+#pragma mark - 15 反转链表
+
 /*
- * 给定一个double类型的浮点数base和int类型的整数exponent。求base的exponent次方。
+ * 输入一个链表，反转链表后，输出新链表的表头
  */
+//
+
+ListNode* ReverseList(ListNode* pHead) {
+    
+    if (pHead == NULL || pHead->next == NULL) {
+        return pHead;
+    }
+    stack<ListNode *> stack;
+    while (pHead->next != NULL) {
+        stack.push(pHead);
+        pHead = pHead->next;
+    }
+    
+    //从栈中重新构建一个链表
+    ListNode *reverseHead = pHead;
+    while (!stack.empty()) {
+        pHead->next = stack.top();
+        pHead = pHead->next;
+        stack.pop();
+    }
+    pHead->next = NULL; //这句话必须，设置
+    return reverseHead;
+}
 #pragma mark - test
 void test()
 {
-//    swordFinger_1_test();
-//    swordFinger_2_test();
-//    swordFinger_3_test();
-    vector<int> rotateArray = {3,4,5,1,2};
-//    cout<< minNumberInRotateArray(rotateArray);
-    reOrderArray(rotateArray);
-    for (int i = 0; i < rotateArray.size(); i ++) {
-        cout << rotateArray[i];
-    }
+    
 }
