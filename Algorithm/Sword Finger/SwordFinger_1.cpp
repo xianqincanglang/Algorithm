@@ -12,6 +12,23 @@
 #include <stack>
 using namespace std;
 
+//二叉树
+struct TreeNode {
+    int val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+};
+
+//单链表
+struct ListNode {
+    int val;
+    struct ListNode *next;
+    ListNode(int x) :
+    val(x), next(NULL) {
+    }
+};
+
 #pragma mark - 1 二位数组中的查找
 /**
  *
@@ -103,13 +120,7 @@ void swordFinger_2_test()
  
  */
 
-struct ListNode {
-    int val;
-    struct ListNode *next;
-    ListNode(int x) :
-          val(x), next(NULL) {
-   }
-};
+
 
 vector<int> printListFromTailToHead(ListNode* head) {
     //先将值push_back到vector
@@ -136,51 +147,43 @@ vector<int> printListFromTailToHead(ListNode* head) {
  problem:
  输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。
  */
-struct TreeNode {
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
-};
 
-class Solution {
-public:
-    TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
-        int in_size =  vin.size();
-        if (in_size == 0) {
-            return NULL;
-        }
-        
-        vector<int> pre_left,pre_right,in_left,in_right;
-        //创建根节点，根节点肯定是前序遍历的第一个数
-        int rootNodeValue = pre[0];
-        TreeNode *rootNode = new TreeNode(rootNodeValue);
-        
-        //找到中序遍历根节点所在位置,存放于变量p中
-        int p = 0;
-        for (p; p < in_size; ++p) {
-            if (vin[p] == rootNodeValue) {
-                break;
-            }
-        }
-        
-   
-        for(int i=0;i<p;i++){           //构建中序序列的左子树和前序序列的左子树
-            in_left.push_back(vin[i]);
-            pre_left.push_back(pre[i+1]);
-        }
-        for(int i=p+1;i<in_size;i++){   //构建中序序列的右子树和前序序列的右子树
-            in_right.push_back(vin[i]);
-            pre_right.push_back(pre[i]);
-        }
-        
-        //递归
-        rootNode->left = reConstructBinaryTree(pre_left, in_left);
-        rootNode->right = reConstructBinaryTree(pre_right, in_right);
 
-        return rootNode;
+TreeNode* reConstructBinaryTree(vector<int> pre,vector<int> vin) {
+    int in_size =  vin.size();
+    if (in_size == 0) {
+        return NULL;
     }
-};
+    
+    vector<int> pre_left,pre_right,in_left,in_right;
+    //创建根节点，根节点肯定是前序遍历的第一个数
+    int rootNodeValue = pre[0];
+    TreeNode *rootNode = new TreeNode(rootNodeValue);
+    
+    //找到中序遍历根节点所在位置,存放于变量p中
+    int p = 0;
+    for (p; p < in_size; ++p) {
+        if (vin[p] == rootNodeValue) {
+            break;
+        }
+    }
+    
+
+    for(int i=0;i<p;i++){           //构建中序序列的左子树和前序序列的左子树
+        in_left.push_back(vin[i]);
+        pre_left.push_back(pre[i+1]);
+    }
+    for(int i=p+1;i<in_size;i++){   //构建中序序列的右子树和前序序列的右子树
+        in_right.push_back(vin[i]);
+        pre_right.push_back(pre[i]);
+    }
+    
+    //递归
+    rootNode->left = reConstructBinaryTree(pre_left, in_left);
+    rootNode->right = reConstructBinaryTree(pre_right, in_right);
+
+    return rootNode;
+}
 #pragma mark - 5 用两个栈实现队列
 /*
  *用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
@@ -480,7 +483,25 @@ ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
 
     return tempHead;
 }
-#pragma mark - 17 树的子结构
+#pragma mark - 17 树的子结构:暂时未想出
+//输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+
+bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
+{
+    if (pRoot2 == NULL) {
+        return false;
+    }
+    
+    HasSubtree(pRoot1->left, pRoot2->left);
+    
+    
+    if (pRoot1->val == pRoot2->val) {
+        return true;
+    }else{
+        return false;
+    }
+}
+
 
 #pragma mark - test
 void test()
