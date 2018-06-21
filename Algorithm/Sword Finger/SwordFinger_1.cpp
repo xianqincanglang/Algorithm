@@ -369,7 +369,7 @@ void reOrderArray(vector<int> &array) {
     oddNumberArray.insert(oddNumberArray.end(), evenNumberArray.begin(), evenNumberArray.end());
     array = oddNumberArray;
 }
-#pragma mark - 14 输入一个链表，输出该链表中倒数第k个结点。，待补充
+#pragma mark - 14 链表中倒数第k个结点
 /*
  * 输入一个链表，输出该链表中倒数第k个结点。
  */
@@ -426,6 +426,62 @@ ListNode* ReverseList(ListNode* pHead) {
     pHead->next = NULL; //这句话必须，设置
     return reverseHead;
 }
+
+#pragma mark - 16 合并两个排序的链表
+
+/*
+ * 输入两个单调递增的链表，输出两个链表合成后的链表，当然我们需要合成后的链表满足单调不减规则。
+ */
+//非递归方法，新建一个链表来代表合并后的链表
+ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
+{
+    if (pHead1 == NULL && pHead2 != NULL) {
+        return pHead2;
+    }
+    if (pHead1 != NULL && pHead2 == NULL) {
+        return pHead1;
+    }
+    if (pHead1 == NULL && pHead2 == NULL) {
+        return NULL;
+    }
+    
+    //确定头结点，新建一个链表来代表合并后的链表，非递归方法
+    ListNode *mergeHead;
+
+    if (pHead1->val <=  pHead2->val) {
+        mergeHead = pHead1;
+        pHead1 = pHead1->next;
+    }else{
+        mergeHead = pHead2;
+        pHead2 = pHead2->next;
+    }
+    ListNode *tempHead = mergeHead;
+    
+    //比较两个链表的大小
+    while (pHead1 != NULL && pHead2 != NULL) {
+        if (pHead1->val <=  pHead2->val) {
+            mergeHead->next = pHead1;
+            mergeHead = pHead1;
+            pHead1 = pHead1->next;
+        }else{
+            mergeHead->next = pHead2;
+            mergeHead = pHead2;
+            pHead2 = pHead2->next;
+        }
+    }
+    
+    
+    if (pHead1 != NULL) {
+        mergeHead->next = pHead1;
+    }
+    if (pHead2 != NULL) {
+        mergeHead->next = pHead2;
+    }
+
+    return tempHead;
+}
+#pragma mark - 17 树的子结构
+
 #pragma mark - test
 void test()
 {
