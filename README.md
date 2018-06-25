@@ -8,10 +8,10 @@ please run the procedure on the platform of mac with Xcode,of Course, the though
     1.二位数组中的查找
     2.替换空格
     3.单链表:从尾到头打印链表
-    4.重建二叉树
-    5.用两个栈实现队列
+    4.二叉树:重建二叉树
+    5.栈:用两个栈实现队列
     6.旋转数组的最小数字
-    7.斐波那契数列
+    7.斐波那契数列 
     8.跳台阶
     9.变态跳台阶
     10.矩形覆盖
@@ -21,3 +21,7 @@ please run the procedure on the platform of mac with Xcode,of Course, the though
     14.单链表:链表中倒数第k个结点
     15.单链表:反转链表
     16.单链表:合并两个排序的链表
+    17.二叉树:树的子结构
+    18.二叉树:二叉树的镜像
+    19.顺时针打印矩阵
+    20.栈:包含min函数的栈

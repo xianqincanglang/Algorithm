@@ -483,23 +483,163 @@ ListNode* Merge(ListNode* pHead1, ListNode* pHead2)
 
     return tempHead;
 }
-#pragma mark - 17 树的子结构:暂时未想出
+#pragma mark - 17 树的子结构
 //输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
-
+//树的遍历一般用递归;
+bool isSubtree(TreeNode *pRoot1,TreeNode *pRoot2)
+{
+	if (pRoot2 == NULL) {
+		return true;
+	}
+	if (pRoot1 == NULL) {
+		return false;
+	}
+	return pRoot1->val == pRoot2->val && isSubtree(pRoot1->left, pRoot2->left) && isSubtree(pRoot1->right, pRoot2->right);
+}
 bool HasSubtree(TreeNode* pRoot1, TreeNode* pRoot2)
 {
-    if (pRoot2 == NULL) {
+    if (pRoot2 == NULL || pRoot1 == NULL) {
         return false;
     }
     
-    HasSubtree(pRoot1->left, pRoot2->left);
-    
-    
-    if (pRoot1->val == pRoot2->val) {
-        return true;
-    }else{
-        return false;
-    }
+	return isSubtree(pRoot1, pRoot2) || HasSubtree(pRoot1->left, pRoot2) || HasSubtree(pRoot1->right, pRoot2);
+	
+}
+
+#pragma mark - 18 二叉树的镜像
+/*
+ 作给定的二叉树，将其变换为源二叉树的镜像。
+ 二叉树的镜像定义：源二叉树
+ 
+   8
+  /  \
+  6   10
+ / \  / \
+ 5  7 9 11
+ 镜像二叉树
+   8
+  /  \
+ 10   6
+ / \  / \
+ 11 9 7  5
+ 
+ */
+void Mirror(TreeNode *pRoot) {	//层次遍历，走一下操作流程总结出规律操作即可
+	if (pRoot == NULL) {
+		return;
+	}
+	if (pRoot->left == NULL && pRoot->right == NULL) {
+		return;
+	}
+	
+	//左右交换
+	TreeNode *pTemp = pRoot->left;
+	pRoot->left = pRoot->right;
+	pRoot->right = pTemp;
+	
+	if (pRoot->left != NULL) {
+		Mirror(pRoot->left);
+	}
+	if (pRoot->right != NULL) {
+		Mirror(pRoot->right);
+	}
+}
+#pragma mark - 19 顺时针打印矩阵
+/**
+ 输入一个矩阵，按照从外向里以顺时针的顺序依次打印出每一个数字，例如，
+ 如果输入如下矩阵： 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+ 则依次打印出数字1,2,3,4,8,12,16,15,14,13,9,5,6,7,11,10.
+ */
+
+/*
+ 解题思路:打印一圈分为四步：
+ 			 第一步：从左到右打印一行
+			 第二步：从上到下打印一列;
+			 第三步: 从右到做打印一行;
+			 第四步：从下到上打印一列;
+			 特殊点：最后一圈有可能退化成只有一行、只有一列、甚至只有一个数字;
+ 但是需仔细分析每一步打印的前提条件;
+ 
+ 用start变量标识起始打印点;
+ 
+*/
+void printMartrixInCircle(vector<vector<int>> &matrix, int start, vector<int> &ret)
+{
+	int rows = (int)matrix.size();
+	int columns = (int)matrix[0].size();
+	int endX = (columns-1)-start;
+	int endY = (rows - 1)-start;
+	//从左到右
+	for (int i = start; i <= endX; ++i) {
+		ret.push_back(matrix[start][i]);
+	}
+	//从上到下，至少两行
+	if (endY > start) {
+		for (int i = start + 1; i <= endY; ++i) {
+			ret.push_back(matrix[i][endX]);
+		}
+	}
+	//从右到左，至少两行两列
+	if (endX > start && endY > start) {
+		for (int i = endX-1; i >= start; i--) {
+			ret.push_back(matrix[endY][i]);
+		}
+	}
+	//从下到上，至少三行两列
+	if (endY > start + 1 && endX > start) {
+		for (int i = endY-1; i >= start + 1; i--) {
+			ret.push_back(matrix[i][start]);
+		}
+	}
+	
+}
+vector<int> printMatrix(vector<vector<int> > matrix) {
+	int rows = (int)matrix.size();
+	int columns = (int)matrix[0].size();
+	vector<int> ret;//作为结果
+	if (matrix.size() == 0 || columns <= 0 || rows <= 0) {
+		return ret;
+	}
+	
+	int start = 0;//start+1代表已打印的圈数,
+	while (columns > start * 2 && rows > start * 2) {	//确定打印的圈数
+		printMartrixInCircle(matrix, start, ret);
+		++start;
+	}
+	return ret;
+}
+
+#pragma mark - 20 包含min函数的栈
+/**
+ 定义栈的数据结构，请在该类型中实现一个能够得到栈最小元素的min函数。
+ */
+
+/*
+ 栈 3 4 2 5 1
+ 辅助栈 3 3 2 2 1
+ 每入栈一次，就与辅助栈顶比较，若小就入栈，如果大就入栈当前的辅助栈顶部或者不入保持栈顶不变;
+ 
+ */
+stack<int> m_min_stack,m_help_stack;
+void min_stack_push(int value) {
+	m_min_stack.push(value);
+	if (m_help_stack.empty()) {
+		m_help_stack.push(value);
+	}else if (value <= m_help_stack.top()){
+		m_help_stack.push(value);
+	}else if (value > m_help_stack.top()){
+		m_help_stack.push(m_help_stack.top());
+	}
+}
+void min_stack_pop() {
+	m_help_stack.pop();
+	m_min_stack.pop();
+}
+int min_stack_top() {
+	return m_min_stack.top();
+}
+int min_stack_min() {
+	return m_help_stack.top();
 }
 
 
