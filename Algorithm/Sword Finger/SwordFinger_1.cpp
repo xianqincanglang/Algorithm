@@ -646,5 +646,6 @@ int min_stack_min() {
 #pragma mark - test
 void test()
 {
-    
+//    swordFinger_1_test();
+    swordFinger_2_test();
 }
