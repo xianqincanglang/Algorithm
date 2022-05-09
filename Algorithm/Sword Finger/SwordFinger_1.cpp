@@ -9,7 +9,10 @@
 #include "SwordFinger_1.hpp"
 #include <vector>
 #include <iostream>
+#include <ios>
 #include <stack>
+using namespace std;
+
 using namespace std;
 
 //二叉树
@@ -642,6 +645,59 @@ int min_stack_min() {
 	return m_help_stack.top();
 }
 
+#pragma mark - 剑指 Offer 03. 数组中重复的数字
+/*
+ *
+
+在一个长度为 n 的数组 nums 里的所有数字都在 0～n-1 的范围内。
+数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
+请找出数组中任意一个重复的数字
+
+作者：Krahets
+链接：https://leetcode.cn/leetbook/read/illustration-of-algorithm/59bjss/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+ * 题目解析
+ * 方法一： 哈希表/set
+ * */
+class Solution03 {
+public:
+    int findRepeatNumber(vector<int> &nums) {
+        unordered_map<int, bool> map;
+        for (int num:nums) {
+            if (map[num]){
+                return num;
+            } else{
+                map[num] = true;
+            }
+        }
+        return -1;
+    };
+};
+/*
+ * 方法二：方法二：原地交换
+ * 特殊的： 本题主要是值等于索引， 可以使用。
+ * 第二种的话，是就题论题，其他题不一定就这样做的，不过思想是好的，就是让索引和索引对应的值相等，就是索引是0，值就是0，索引是1，值就是1。
+ * */
+class Solution03_2 {
+public:
+    int findRepeatNumber(vector<int> &nums) {
+        int i =0;
+        while (i<nums.size()){
+            if (nums[i] == i){
+                i++;
+                continue;
+            }
+            if (nums[i] == nums[nums[i]]){
+                return nums[i];
+            }
+            swap(nums[i],nums[nums[i]]);
+
+        }
+        return -1;
+    };
+};
 
 #pragma mark - test
 void test()
